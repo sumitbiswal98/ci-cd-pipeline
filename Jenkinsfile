@@ -45,7 +45,7 @@ pipeline
                     {
                         openshift.withProject("ci-cd")
                         {
-                            def deployment = openshift.select("dc", "pipeline")
+                            def deployment = openshift.selector("dc", "pipeline")
                             
                             if(!deployment.exists())
                             {
