@@ -1,26 +1,19 @@
-pipeline
-{
-    agent
-    {
-        label 'maven'
-    }
-    
-    
-    stages
-    {
+pipeline {
+
+  agent {
+    label 'maven'
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        echo 'Building..'
         
-        stage('Build')
-        {
-            steps
-            {
-                
-                
-                
-                echo 'Building....'
-                script
-                {
-                   openshift.withCluster() { 
-                       openshift.withProject("<your_project_name>") {
+        // Add steps here
+          script
+          {
+            openshift.withCluster() { 
+  openshift.withProject("<your_project_name>") {
   
     def buildConfigExists = openshift.selector("bc", "codelikethewind").exists() 
     
@@ -29,26 +22,16 @@ pipeline
     } 
     
     openshift.selector("bc", "codelikethewind").startBuild("--from-file=target/simple-servlet-0.0.1-SNAPSHOT.war", "--follow") } }
-                }
-                
-                
-             }
-          }
       }
+    }
+    stage('Create Container Image') {
+      steps {
+        echo 'Create Container Image..'
         
-        
-        
-        stage('Create Container Image')
-        {
-            steps
-            {
-                echo 'Create Container Image'
-                
-                
-                
-                script
-                {
-                    openshift.withCluster() { 
+        script {
+
+          // Add steps here
+            openshift.withCluster() { 
   openshift.withProject("<your_project_name") { 
     def deployment = openshift.selector("dc", "codelikethewind") 
     
@@ -63,21 +46,19 @@ pipeline
     } 
   } 
 }
-                }
-                
-                
-                
-                
-                
-            }
+
         }
-        
-        
-        
-        
-        
-        
+      }
     }
-    
-    
+    stage('Deploy') {
+      steps {
+        echo 'Deploying....'
+        script {
+
+          // Add steps here
+
+        }
+      }
+    }
+  }
 }
