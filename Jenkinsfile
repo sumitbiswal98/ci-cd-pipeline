@@ -14,6 +14,8 @@ pipeline
             steps
             {
                 echo 'Building....'
+                script
+                {
                 openshift.withCluster()
                 {
                     openshift.withProject("ci-cd")
@@ -29,6 +31,7 @@ pipeline
                     }
                 }
             }
+        }
         }
         
         
