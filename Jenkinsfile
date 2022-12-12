@@ -40,7 +40,8 @@ pipeline
                     def buildConfigExists = openshift.selector("bc", "a1").exists()
                     if(!buildConfigExists)
                     {
-                        openshift.newBuild("--name=a1", "--docker-image=registry.redhat.io/jboss-eap-7/eap74-openjdk8-openshift-rhel7", "--binary")
+                        openshift.newBuild("--name=a1", "--docker-image=registry.redhat.io/jboss-webserver-3/webserver31-tomcat8-openshift
+", "--binary")
                     }
                     openshift.selector("bc", "a1").startBuild("--from-file=target/simple-servlet-0.0.1-SNAPSHOT.war", "--follow")
                 }
